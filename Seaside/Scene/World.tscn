@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scene/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/sea.png" type="Texture" id=2]
+[ext_resource path="res://Scene/Background.gd" type="Script" id=3]
+[ext_resource path="res://Scene/EnemySpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scene/World.gd" type="Script" id=5]
+[ext_resource path="res://Assets/sun.png" type="Texture" id=6]
+[ext_resource path="res://Helvetica-Bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Scene/SCREEN.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Music/Untitled.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Music/song.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Music/Explosion.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Music/Game.ogg" type="AudioStream" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
+
+[node name="World" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Background" type="Sprite" parent="."]
+scale = Vector2( 0.830535, 0.830535 )
+texture = ExtResource( 2 )
+centered = false
+script = ExtResource( 3 )
+
+[node name="Background2" type="Sprite" parent="."]
+position = Vector2( 1595, 0 )
+scale = Vector2( 0.830535, 0.830535 )
+texture = ExtResource( 2 )
+centered = false
+script = ExtResource( 3 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 33, 309 )
+
+[node name="EnemySpawner" parent="." instance=ExtResource( 4 )]
+
+[node name="Score" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 827.0
+margin_right = 291.0
+margin_bottom = 888.0
+custom_colors/font_color = Color( 1, 0.427451, 0.0117647, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "LEMONADE SERVED: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score2" type="Label" parent="."]
+margin_left = 1036.0
+margin_top = 771.0
+margin_right = 1596.0
+margin_bottom = 896.0
+custom_colors/font_color = Color( 1, 0.427451, 0.0117647, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "MOVE: WASD
+SERVE: Spacebar"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sun" type="Sprite" parent="."]
+position = Vector2( 77, 76 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 6 )
+
+[node name="Sun2" type="Sprite" parent="."]
+position = Vector2( 220, 76 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 6 )
+
+[node name="Sun3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 364, 76 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 6 )
+
+[node name="SCREEN" parent="." instance=ExtResource( 8 )]
+visible = false
+margin_left = 819.0
+margin_top = 442.0
+margin_right = 819.0
+margin_bottom = 442.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+autoplay = true
+
+[node name="Cheer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = 10.0
+
+[node name="Explosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = 20.0
+
+[node name="GAME" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = 20.0
+
+[connection signal="spawn_laser" from="Player" to="." method="_on_Player_spawn_laser"]
